@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>special service</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="full-screen" content="yes"/>
+		<meta name="screen-orientation" content="portrait"/>
+		<meta name="x5-fullscreen" content="true"/>
+		<meta name="360-fullscreen" content="true"/>
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<link href="../../css/bootstrap.css" rel="stylesheet">
+		<link href="../../css/icheck/all.css" rel="stylesheet">
+		<link href="../../css/icheck/square/green.css" rel="stylesheet">
+		<link href="../../css/icheck/square/orange.css" rel="stylesheet">
+		<link href="../../css/style.css" rel="stylesheet">
+	</head>
+	<body>
+		<nav class="navbar navbar-default navbar-blue" role="navigation">
+			<div class="container text-center nav-body">
+				<a href="../../index.html" class="pull-left">
+					<img src="../../images/back.png" class="icon-back" alt="返回">
+					<span class="font-16">
+					return
+					</span>
+				</a>
+				
+				<a href="#" class="pull-right">
+					<img src="../../images/fresh.png" class="icon-fresh" alt="刷新">
+				</a>
+			</div>
+		</nav>
+		<form action="../onlineTicket/index.html" id="submitForm">
+		<div class="container content-body servicesList">
+			<div class="col-xs-12 servicesTips">Dear, please choose the service you need.</div>
+			<div class="col-xs-12 no-padding">
+				<ul class="list-group servicesItems">
+					
+					<li class="list-group-item servicesItem">
+						<input tabindex="5" type="checkbox" id="checkbox-3">
+						<label for="checkbox-3">Travel security service</label>
+						
+					</li>
+					
+			</div>
+		</div>
+		<div class=" col-lg-offset-5 col-lg-2 col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 col-xs-12 text-center">
+				<button class="btn btn-success btn-block btn-lg" type="button" onclick="nextStep(this);">
+Ok and start the next step</button>
+			<div class="agree">
+			<div class="Tooltip">Please tick the agreement to "grab the ticket purchase agreement"</div>
+			<input tabindex="5" type="checkbox" id="checkbox-agree">
+			<label for="checkbox-agree">
+Agree to the "Purchase Agreement"</label>
+			</div>
+		</div>
+	</form>
+		<script src="../../js/jquery-1.11.1.min.js"></script>
+		<script src="../../js/bootstrap.min.js"></script>
+		<script src="../../js/icheck.min.js"></script>
+		<script src="../../js/global.js"></script>
+		<script type="text/javascript">
+		$(document).ready(function() {
+			var target = GetQueryString("target");
+			switch (target) {
+				case "book":
+					$("#submitForm").attr({
+						action: '../bookTicket/index.html'
+					});
+					break;
+				case "buy":
+					$("#submitForm").attr({
+						action: '../onlineTicket/index.html'
+					});
+					break;
+				case "reissue":
+					$("#submitForm").attr({
+						action: '../reissueTicket/index.html'
+					});
+					break;
+				case "best":
+					$("#submitForm").attr({
+						action: '../bestRoute/index.html'
+					});
+					break;
+			}
+			$('#checkbox-1,#checkbox-2,#checkbox-3,#checkbox-4').iCheck({
+				checkboxClass: 'icheckbox_square-green',
+				radioClass: 'iradio_square-green',
+				increaseArea: '20%' // optional
+			});
+			$('#checkbox-agree').iCheck({
+				checkboxClass: 'icheckbox_square-orange',
+				radioClass: 'iradio_square-orange',
+				increaseArea: '20%' // optional
+			});
+			$('#checkbox-agree').iCheck('check');
+			$('#checkbox-agree').on('ifChecked', function(event) {
+				if ($(".Tooltip").hasClass('active')) {
+					$(".Tooltip").removeClass('active');
+				}
+			});
+		});
+		var showTime = false;
+		var nextStep = function(btn) {
+			var agree = $("#checkbox-agree").is(':checked');
+			if (agree) {
+				$("#submitForm").submit();
+			} else if ($(".Tooltip").hasClass('active')) {
+				window.clearTimeout(showTime);
+				showTime = window.setTimeout(function() {
+					$(".Tooltip").removeClass('active');
+				}, 3000);
+				return;
+			} else {
+				$(".Tooltip").addClass('active');
+				showTime = window.setTimeout(function() {
+					$(".Tooltip").removeClass('active');
+				}, 3000);
+			}
+		}
+		</script>
+	</body>
+</html>
